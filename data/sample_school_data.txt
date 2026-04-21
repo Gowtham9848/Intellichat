@@ -1,0 +1,39 @@
+SCHOOL INFORMATION
+==================
+
+School Name: Greenwood Elementary School
+Principal: Dr. Sarah Johnson
+Address: 123 Education Lane, Springfield
+
+SCHOOL TIMINGS
+--------------
+Monday to Friday: 8:00 AM to 3:00 PM
+Saturday: Closed
+Sunday: Closed
+
+ATTENDANCE POLICY
+-----------------
+Students must maintain 90% attendance.
+More than 3 absences per month requires a written note from parents.
+If a student is absent, parents must call the school office by 9:00 AM.
+Contact number for absences: 555-123-4567
+
+UPCOMING EVENTS
+---------------
+Parent Teacher Meeting: November 15, 2024 at 5:00 PM
+Annual Sports Day: December 10, 2024
+Winter Break: December 20, 2024 to January 5, 2025
+
+GRADE INFORMATION
+-----------------
+Report cards are issued every quarter.
+Q1 Results: October 30, 2024
+Q2 Results: January 15, 2025
+Q3 Results: March 30, 2025
+Q4 Results: June 10, 2025
+
+CONTACT INFORMATION
+-------------------
+Main Office: 555-123-4567
+Email: info@greenwoodschool.edu
+Emergency Contact: 555-999-8888

@@ -1,0 +1,23 @@
+# Environment variables (NEVER push this)
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+*.egg-info/
+
+# VS Code
+.vscode/
+
+# Data files
+data/uploads/*
+!data/uploads/.gitkeep
+
+# MLflow
+mlruns/
+
+# Airflow
+logs/
+airflow.db
