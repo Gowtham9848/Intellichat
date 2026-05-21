@@ -16,7 +16,7 @@ default_args = {
     'retry_delay': timedelta(minutes=5),
 }
 
-# Define the DAG
+# Defining the dag where the tasks will be done.
 dag = DAG(
     'document_processing_pipeline',
     default_args=default_args,
@@ -36,6 +36,7 @@ def scan_for_new_documents(**context):
     
     new_files = []
     for filename in os.listdir(upload_dir):
+        #checking for supporting file formats and ignoring .gitkeep
         if any(filename.endswith(ext) for ext in supported_extensions):
             if filename != '.gitkeep':
                 file_path = os.path.join(upload_dir, filename)

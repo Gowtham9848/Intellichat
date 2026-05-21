@@ -1,6 +1,7 @@
 from langchain_anthropic import ChatAnthropic
-from langchain.chains import RetrievalQA
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
 from app.rag.vector_store import VectorStoreManager
 from app.rag.config import Config
 
@@ -13,6 +14,7 @@ class RAGPipeline:
             temperature=Config.TEMPERATURE,
             max_tokens=Config.MAX_TOKENS
         )
+        self.retriever = None
         self.qa_chain = self._build_chain()
 
     def _build_chain(self):
@@ -38,26 +40,38 @@ Answer:"""
         )
 
         vector_store = self.vector_store_manager.get_vector_store()
-        retriever = vector_store.as_retriever(
+        self.retriever = vector_store.as_retriever(
             search_kwargs={"k": Config.TOP_K_RESULTS}
         )
 
-        chain = RetrievalQA.from_chain_type(
-            llm=self.llm,
-            chain_type="stuff",
-            retriever=retriever,
-            chain_type_kwargs={"prompt": prompt},
-            return_source_documents=True
-        )
-        return chain
+        # Format documents
+        def format_docs(docs):
+            return "\n\n".join(doc.page_content for doc in docs)
 
+        # Build chain
+        chain = (
+            {
+                "context": self.retriever | format_docs,
+                "question": RunnablePassthrough()
+            }
+            | prompt
+            | self.llm
+            | StrOutputParser()
+        )
+        
+        return chain
     def query(self, question: str):
         """Query the RAG pipeline"""
         try:
-            result = self.qa_chain.invoke({"query": question})
+            # Get answer
+            answer = self.qa_chain.invoke(question)
+            
+            # Get sources using invoke
+            docs = self.retriever.invoke(question)
+            
             return {
-                "answer": result["result"],
-                "sources": [doc.metadata for doc in result["source_documents"]],
+                "answer": answer,
+                "sources": [doc.metadata for doc in docs],
                 "status": "success"
             }
         except Exception as e:

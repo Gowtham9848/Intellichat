@@ -68,16 +68,16 @@ class PipelineRunner:
         print("\n🚀 Starting IntelliChat Pipeline...")
         print("=" * 50)
         
-        # Step 1
+        # Step 1- finding the files to process
         files = self.scan_documents()
         if not files:
             print("⚠️ No documents found in data/uploads/")
             return
         
-        # Step 2
+        # Step 2- processing the documents and storing in pinecone
         all_chunks = self.process_and_store(files)
         
-        # Step 3
+        # Step 3 - log metrics about the chunks and embeddings to mlflow
         self.track_quality(all_chunks)
         
         print("\n" + "=" * 50)
